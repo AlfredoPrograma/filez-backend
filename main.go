@@ -2,9 +2,10 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
-func main() {
+func bootstrap() *fiber.App {
 	app := fiber.New()
 
 	app.Get("/", func(c *fiber.Ctx) error {
@@ -12,6 +13,16 @@ func main() {
 			"message": "Hello world",
 		})
 	})
+
+	return app
+}
+
+func main() {
+	if err := godotenv.Load(); err != nil {
+		panic(err)
+	}
+
+	app := bootstrap()
 
 	if err := app.Listen(":9000"); err != nil {
 		panic(err)
