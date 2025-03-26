@@ -1,2 +1,8 @@
+# Env vars
+.env
+
+# Docker
+docker
+
 # Temporary folders
 tmp
