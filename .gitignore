@@ -2,7 +2,7 @@
 .env
 
 # Docker
-docker
+.docker
 
 # Temporary folders
 tmp
