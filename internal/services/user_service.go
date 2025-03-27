@@ -11,17 +11,17 @@ type UserService interface {
 }
 
 type userService struct {
-	usersRepo repositories.UserRepository
+	userRepo repositories.UserRepository
 }
 
-func NewUserService(usersRepo repositories.UserRepository) UserService {
-	return &userService{usersRepo}
+func NewUserService(userRepo repositories.UserRepository) UserService {
+	return &userService{userRepo}
 }
 
 func (s userService) GetByEmail(email string) (*domain.PublicUser, error) {
-	return s.usersRepo.GetByEmail(email)
+	return s.userRepo.GetByEmail(email)
 }
 
 func (s userService) Create(user domain.CreateUserDTO) error {
-	return s.usersRepo.Create(user)
+	return s.userRepo.Create(user)
 }
