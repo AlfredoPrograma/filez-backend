@@ -6,3 +6,6 @@ docker
 
 # Temporary folders
 tmp
+
+# Vscode
+.vscode
