@@ -6,27 +6,27 @@ import (
 )
 
 type UserRepository interface {
-	GetByEmail(email string) (*domain.PublicUser, error)
-	Create(user domain.CreateUserDTO) error
+	GetByEmail(email string) (domain.User, error)
+	Create(user domain.User) error
 }
 
 type userRepository struct {
 	db *gorm.DB
 }
 
-func (repo userRepository) GetByEmail(email string) (*domain.PublicUser, error) {
-	var user domain.PublicUser
+func (repo userRepository) GetByEmail(email string) (domain.User, error) {
+	var user domain.User
 
-	query := repo.db.Where("email = ?", email).First(&user)
+	query := repo.db.Where("email = ?", email).Select("id", "first_name", "last_name", "email", "created_at", "updated_at", "deleted_at").First(&user)
 
 	if query.Error != nil {
-		return nil, query.Error
+		return user, query.Error
 	}
 
-	return &user, nil
+	return user, nil
 }
 
-func (repo userRepository) Create(user domain.CreateUserDTO) error {
+func (repo userRepository) Create(user domain.User) error {
 	query := repo.db.Create(&user)
 
 	if query.Error != nil {

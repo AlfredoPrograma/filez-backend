@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/alfredoprograma/filez-server/internal/config"
+	"github.com/alfredoprograma/filez-server/internal/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -25,7 +26,7 @@ func Connect(config *config.Config) *gorm.DB {
 		panic(err)
 	}
 
-	if err = db.AutoMigrate(); err != nil {
+	if err = db.AutoMigrate(&domain.User{}); err != nil {
 		panic(err)
 	}
 

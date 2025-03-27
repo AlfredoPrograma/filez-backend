@@ -41,5 +41,6 @@ func (c *UserController) Create(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	return ctx.SendStatus(http.StatusCreated)
+	ctx.Status(http.StatusCreated)
+	return nil
 }

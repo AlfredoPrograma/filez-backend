@@ -1,28 +1,36 @@
 package domain
 
-import "gorm.io/gorm"
-
-type userHiddenFields struct {
+type CommonUserFields struct {
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Email     string `json:"email"`
+}
+type User struct {
+	Model
+	CommonUserFields
 	Password string
 }
 
-type userPublicFields struct {
-	FirstName string
-	LastName  string
-	Email     string
-}
-
-type User struct {
-	gorm.Model
-	userPublicFields
-	userHiddenFields
-}
-
 type CreateUserDTO struct {
-	userPublicFields
-	userHiddenFields
+	CommonUserFields
+	Password string
 }
 
 type PublicUser struct {
-	userPublicFields
+	Model
+	CommonUserFields
+}
+
+func ToPublicUser(user User) PublicUser {
+	return PublicUser{
+		Model:            user.Model,
+		CommonUserFields: user.CommonUserFields,
+	}
+}
+
+func FromCreateUserDTO(dto CreateUserDTO) User {
+	return User{
+		CommonUserFields: dto.CommonUserFields,
+		Password:         dto.Password,
+	}
 }
