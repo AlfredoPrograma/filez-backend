@@ -17,7 +17,7 @@ type userRepository struct {
 func (repo userRepository) GetByEmail(email string) (domain.User, error) {
 	var user domain.User
 
-	query := repo.db.Where("email = ?", email).Select("id", "first_name", "last_name", "email", "created_at", "updated_at", "deleted_at").First(&user)
+	query := repo.db.Where("email = ?", email).First(&user)
 
 	if query.Error != nil {
 		return user, query.Error

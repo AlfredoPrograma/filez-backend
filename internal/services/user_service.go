@@ -23,7 +23,7 @@ func (s userService) GetByEmail(email string) (domain.PublicUser, error) {
 	user, err := s.userRepo.GetByEmail(email)
 
 	if err != nil {
-		return *new(domain.PublicUser), err
+		return domain.PublicUser{}, err
 	}
 
 	return domain.ToPublicUser(user), nil
