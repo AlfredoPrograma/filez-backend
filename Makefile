@@ -1,11 +1,11 @@
 # Builds application binary
 build:
-	go build -o filezserver ./...
+	go build -o filezserver ./cmd/api/main.go
 
 # Spins up development mode with hot reload
 dev:
 	air -c ./.air.toml
 
 # Run tests
-test:
+tests:
 	go test -v ./...
