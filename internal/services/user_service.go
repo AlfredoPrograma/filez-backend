@@ -11,11 +11,12 @@ type UserService interface {
 }
 
 type userService struct {
-	userRepo repositories.UserRepository
+	userRepo       repositories.UserRepository
+	encryptService EncryptService
 }
 
-func NewUserService(usersRepo repositories.UserRepository) UserService {
-	return &userService{usersRepo}
+func NewUserService(usersRepo repositories.UserRepository, encryptService EncryptService) UserService {
+	return &userService{usersRepo, encryptService}
 }
 
 func (s userService) GetByEmail(email string) (domain.PublicUser, error) {
@@ -30,5 +31,12 @@ func (s userService) GetByEmail(email string) (domain.PublicUser, error) {
 
 func (s userService) Create(data domain.CreateUserDTO) error {
 	user := domain.FromCreateUserDTO(data)
+	hashedPassword, err := s.encryptService.Hash(user.Password)
+
+	if err != nil {
+		return err
+	}
+
+	user.Password = hashedPassword
 	return s.userRepo.Create(user)
 }

@@ -29,7 +29,8 @@ func NewApplication(config *config.Config, db *gorm.DB) Application {
 	userRepo := repositories.NewUserRepository(db)
 
 	// Initialize services
-	userService := services.NewUserService(userRepo)
+	encryptService := services.NewEncryptService()
+	userService := services.NewUserService(userRepo, encryptService)
 
 	fiber := fiber.New()
 

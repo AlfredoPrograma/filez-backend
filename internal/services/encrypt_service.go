@@ -9,7 +9,7 @@ type EncryptService interface {
 
 type encryptService struct{}
 
-func NewEncryptService() encryptService {
+func NewEncryptService() EncryptService {
 	return encryptService{}
 }
 
